@@ -17,7 +17,7 @@ public class Usuario {
     private String nombre;
     private String correo;
     private String telefono;
-    private String contraseña;
+    private String contrasena;
     private String estado = "activo";
     private String rol = "interesado";
 }

@@ -2,6 +2,7 @@ package edu.co.uniquindio.demo.model;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,6 +24,6 @@ public class Inmueble {
     private double valorAdministracion;
     private String descripcion;
     private String estado = "disponible"; // disponible/ocupado
-    private String propietarioId;
+    private ObjectId propietarioId;
     private List<String> fotos; // URLs o nombres de archivos
 }
