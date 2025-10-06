@@ -10,6 +10,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
+    /**
+     * US-03 — Modelo/entidad de Inmueble.
+     * Campos definidos (mínimos para publicar):
+     *  - direccion, area, canon, administracionIncluida, valorAdministracion, descripcion
+     *  - estado (disponible/ocupado), propietarioId, fotos (lista de URLs)
+     *
+     * Persistencia:
+     *  - Colección MongoDB: "inmuebles" (ver InmuebleRepository).
+     */
+
+
 @Document(collection = "inmuebles")
 @Data
 @NoArgsConstructor
