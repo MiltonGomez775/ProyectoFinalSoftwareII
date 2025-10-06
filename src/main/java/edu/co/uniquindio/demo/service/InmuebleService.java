@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-    /**
-     * US-03 — Servicio de inmuebles.
-     * Nota: al publicar, el estado por defecto es "disponible".
-     * Se agregan utilidades para listar por estado y por propietario.
-     */
+ /**
+ * US-03 — Servicio de inmuebles.
+ * Nota: al publicar, el estado por defecto es "disponible".
+ * Se agregan utilidades para listar por estado y por propietario.
+ */
 
 @Service
 public class InmuebleService {
@@ -42,10 +42,14 @@ public class InmuebleService {
     public List<Inmueble> listarInmuebles() {
         return inmuebleRepository.findAll();
     }
-
-    /** US-03: Lista inmuebles por estado ("disponible"/"ocupado"). */
+  
+   /** US-03: Lista inmuebles por estado ("disponible"/"ocupado"). */
     public List<Inmueble> listarPorEstado(String estado) {
         return inmuebleRepository.findByEstado(estado);
+    }
+  
+    public Inmueble obtenerInmueblePorId(String id) {
+        return inmuebleRepository.findById(id).orElse(null);
     }
 
 }

@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-    /**
-     * US-03 — Publicar/editar/listar inmuebles.
-     * Endpoints clave de la HU:
-     *  - POST /api/inmuebles   (publicar/crear)
-     *  - PUT  /api/inmuebles/{id} (editar)
-     *  - GET  /api/inmuebles   (listar)
-     */
+ /**
+ * US-03 — Publicar/editar/listar inmuebles.
+ * Endpoints clave de la HU:
+ *  - POST /api/inmuebles   (publicar/crear)
+ *  - PUT  /api/inmuebles/{id} (editar)
+ *  - GET  /api/inmuebles   (listar)
+ */
 
 @RestController
 @RequestMapping("/api/inmuebles")
@@ -36,10 +36,21 @@ public class InmuebleController {
             @RequestBody Inmueble inmuebleActualizado) {
         return ResponseEntity.ok(inmuebleService.editarInmueble(id, inmuebleActualizado));
     }
-    
+  
     /** US-03: Lista todos los inmuebles. */
+    @GetMapping("/{id}")
+    public ResponseEntity<Inmueble> obtenerInmueblePorId(@PathVariable String id) {
+        Inmueble inmueble = inmuebleService.obtenerInmueblePorId(id);
+        if (inmueble != null) {
+            return ResponseEntity.ok(inmueble);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+  
     @GetMapping
     public ResponseEntity<List<Inmueble>> listarInmuebles() {
         return ResponseEntity.ok(inmuebleService.listarInmuebles());
     }
+
 }

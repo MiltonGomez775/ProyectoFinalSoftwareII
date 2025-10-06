@@ -38,4 +38,12 @@ public class UsuarioService {
         usuario.setRol(nuevoRol);
         return usuarioRepository.save(usuario);
     }
+
+    public Usuario obtenerUsuarioPorId(String id) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+        if (usuarioOpt.isEmpty()) {
+            throw new RuntimeException("Usuario no encontrado con id: " + id);
+        }
+        return usuarioOpt.get();
+    }
 }
