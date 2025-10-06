@@ -23,4 +23,10 @@ public class AuthService {
         // Llamamos directamente al método estático
         return JwtUtil.generarToken(usuario.getId(), usuario.getRol());
     }
+
+    public Usuario obtenerUsuarioPorCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+}
+
 }

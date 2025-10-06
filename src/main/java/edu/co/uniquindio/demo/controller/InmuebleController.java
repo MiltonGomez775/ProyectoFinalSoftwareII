@@ -27,8 +27,19 @@ public class InmuebleController {
         return ResponseEntity.ok(inmuebleService.editarInmueble(id, inmuebleActualizado));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Inmueble> obtenerInmueblePorId(@PathVariable String id) {
+        Inmueble inmueble = inmuebleService.obtenerInmueblePorId(id);
+        if (inmueble != null) {
+            return ResponseEntity.ok(inmueble);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<Inmueble>> listarInmuebles() {
         return ResponseEntity.ok(inmuebleService.listarInmuebles());
     }
+
 }

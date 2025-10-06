@@ -1,6 +1,7 @@
 package edu.co.uniquindio.demo.controller;
 
 import edu.co.uniquindio.demo.dto.LoginRequest;
+import edu.co.uniquindio.demo.model.Usuario;
 import edu.co.uniquindio.demo.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,17 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest) {
-        String token = authService.login(loginRequest.getCorreo(), loginRequest.getContrasena());
+    String token = authService.login(loginRequest.getCorreo(), loginRequest.getContrasena());
 
-        Map<String, String> response = new HashMap<>();
-        response.put("token", token);
-        response.put("mensaje", "Login exitoso");
+    // Aquí buscas el usuario por correo
+    Usuario usuario = authService.obtenerUsuarioPorCorreo(loginRequest.getCorreo());
 
-        return ResponseEntity.ok(response);
-    }
+    Map<String, String> response = new HashMap<>();
+    response.put("token", token);
+    response.put("usuarioId", usuario.getId());
+    response.put("mensaje", "Login exitoso");
+
+    return ResponseEntity.ok(response);
+}
+
 }

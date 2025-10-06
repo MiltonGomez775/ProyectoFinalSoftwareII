@@ -36,4 +36,8 @@ public class InmuebleService {
     public List<Inmueble> listarInmuebles() {
         return inmuebleRepository.findAll();
     }
+
+    public Inmueble obtenerInmueblePorId(String id) {
+        return inmuebleRepository.findById(id).orElse(null);
+    }
 }
