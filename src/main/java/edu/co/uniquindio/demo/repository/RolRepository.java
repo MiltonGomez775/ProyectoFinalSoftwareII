@@ -13,7 +13,6 @@ import java.util.Optional;
  */
 @Repository
 public interface RolRepository extends MongoRepository<Rol, String> {
-
     /**
      * Busca un rol en la base de datos por su nombre.
      *

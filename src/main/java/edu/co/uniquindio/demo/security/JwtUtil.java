@@ -28,7 +28,6 @@ public class JwtUtil {
                 .getBody()
                 .getSubject();
     }
-
     public static String getRolFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build()
                 .parseClaimsJws(token)
