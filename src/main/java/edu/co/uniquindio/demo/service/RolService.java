@@ -2,22 +2,33 @@ package edu.co.uniquindio.demo.service;
 
 import edu.co.uniquindio.demo.model.Rol;
 import edu.co.uniquindio.demo.repository.RolRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
 public class RolService {
 
-    @Autowired
-    private RolRepository rolRepository;
+    private final RolRepository rolRepository;
 
-    public Rol crearRol(Rol rol) {
-        return rolRepository.save(rol);
+    public RolService(RolRepository rolRepository) {
+        this.rolRepository = rolRepository;
     }
 
-    public List<Rol> listarRoles() {
-        return rolRepository.findAll();
+    /**
+     * Guarda un nuevo rol en la base de datos.
+     * @param rol Objeto Rol a registrar
+     * @return Rol guardado
+     */
+    public Rol guardarRol(Rol rol) {
+        return this.rolRepository.save(rol);
+    }
+
+    /**
+     * Obtiene todos los roles registrados.
+     * @return Lista de roles
+     */
+    public List<Rol> obtenerTodos() {
+        return this.rolRepository.findAll();
     }
 }
+

@@ -8,20 +8,44 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST encargado de gestionar las operaciones relacionadas con los roles del sistema.
+ * Permite crear nuevos roles y listar los existentes.
+ *
+ * @author
+ * @version 1.1
+ */
 @RestController
 @RequestMapping("/api/roles")
 public class RolController {
 
-    @Autowired
-    private RolService rolService;
+    private final RolService rolService;
 
-    @PostMapping
-    public ResponseEntity<Rol> crearRol(@RequestBody Rol rol) {
-        return ResponseEntity.ok(rolService.crearRol(rol));
+    /**
+     * Constructor con inyección de dependencias explícita.
+     * @param rolService servicio que maneja la lógica de negocio de roles
+     */
+    @Autowired
+    public RolController(RolService rolService) {
+        this.rolService = rolService;
     }
 
+    /**
+     * Endpoint para registrar un nuevo rol en el sistema.
+     * @param rol Objeto Rol recibido en formato JSON
+     * @return Rol creado
+     */
+    @PostMapping
+    public ResponseEntity<Rol> crearRol(@RequestBody Rol rol) {
+        return ResponseEntity.ok(rolService.guardarRol(rol)); // método actualizado
+    }
+
+    /**
+     * Endpoint para listar todos los roles disponibles en el sistema.
+     * @return Lista de roles existentes
+     */
     @GetMapping
     public ResponseEntity<List<Rol>> listarRoles() {
-        return ResponseEntity.ok(rolService.listarRoles());
+        return ResponseEntity.ok(rolService.obtenerTodos()); // método actualizado
     }
 }
