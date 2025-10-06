@@ -29,7 +29,7 @@ public class InmuebleService {
         inmueble.setValorAdministracion(inmuebleActualizado.getValorAdministracion());
         inmueble.setDescripcion(inmuebleActualizado.getDescripcion());
         inmueble.setEstado(inmuebleActualizado.getEstado());
-
+        
         return inmuebleRepository.save(inmueble);
     }
 
