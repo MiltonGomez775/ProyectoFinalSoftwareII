@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import edu.co.uniquindio.demo.model.Inmueble;
 
 public interface InmuebleRepository extends MongoRepository<Inmueble, String> {
-    List<Inmueble> findByEstado(String estado);
+ List<Inmueble> findByEstado(String estado);
 }

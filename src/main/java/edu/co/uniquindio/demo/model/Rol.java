@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 /**
  * Representa un rol dentro del sistema inmobiliario.
  * 
@@ -18,7 +17,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Rol {
-
     /** Identificador único del rol en la base de datos MongoDB. */
     @Id
     private String id;
