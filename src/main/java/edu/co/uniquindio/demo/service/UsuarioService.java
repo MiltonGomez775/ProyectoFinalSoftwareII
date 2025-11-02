@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -46,4 +47,12 @@ public class UsuarioService {
         }
         return usuarioOpt.get();
     }
+
+    public List<Usuario> listarPropietarios() {
+        return usuarioRepository.findAll()
+                .stream()
+                .filter(usuario -> "PROPIETARIO".equalsIgnoreCase(usuario.getRol()))
+                .collect(Collectors.toList());
+    }
+    
 }

@@ -39,4 +39,9 @@ public class UsuarioController {
             return ResponseEntity.ok(usuario);
 }
 
+    @GetMapping("/propietarios")
+    public ResponseEntity<List<Usuario>> listarPropietarios() {
+        return ResponseEntity.ok(usuarioService.listarPropietarios());
+    }
+
 }
