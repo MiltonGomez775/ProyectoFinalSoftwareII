@@ -42,4 +42,15 @@ public class InmuebleController {
         return ResponseEntity.ok(inmuebleService.listarInmuebles());
     }
 
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<Inmueble>> filtrarInmuebles(
+        @RequestParam(required = false) String direccion,
+        @RequestParam(required = false) Double minPrecio,
+        @RequestParam(required = false) Double maxPrecio,
+        @RequestParam(required = false) String estado) {
+
+    List<Inmueble> resultados = inmuebleService.filtrarInmuebles(direccion, minPrecio, maxPrecio, estado);
+    return ResponseEntity.ok(resultados);
+    }
+
 }

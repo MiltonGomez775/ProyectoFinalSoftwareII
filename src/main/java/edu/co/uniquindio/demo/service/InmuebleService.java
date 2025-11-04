@@ -40,4 +40,15 @@ public class InmuebleService {
     public Inmueble obtenerInmueblePorId(String id) {
         return inmuebleRepository.findById(id).orElse(null);
     }
+
+    public List<Inmueble> filtrarInmuebles(String direccion, Double minPrecio, Double maxPrecio, String estado) {
+    List<Inmueble> todos = inmuebleRepository.findAll();
+
+    return todos.stream()
+            .filter(i -> direccion == null || i.getDireccion().toLowerCase().contains(direccion.toLowerCase()))
+            .filter(i -> minPrecio == null || i.getCanon() >= minPrecio)
+            .filter(i -> maxPrecio == null || i.getCanon() <= maxPrecio)
+            .filter(i -> estado == null || i.getEstado().equalsIgnoreCase(estado))
+            .toList();
+}
 }
