@@ -1,5 +1,5 @@
 # Usa OpenJDK 21
-FROM openjdk:21-jdk
+FROM eclipse-temurin:21-jdk
 
 # Carpeta de trabajo dentro del contenedor
 WORKDIR /app
