@@ -57,8 +57,9 @@ public class InmuebleService {
             .filter(i -> maxPrecio == null || i.getCanon() <= maxPrecio)
             .filter(i -> estado == null || i.getEstado().equalsIgnoreCase(estado))
             .toList();
-    }     
+    }
 
+    // 🔹 Implementación: se agregó la asignación del propietario al inmueble y se muestra su nombre en los detalles
     public InmuebleDetalle obtenerDetalleInmueblePorId(String id) {
         Inmueble inmueble = inmuebleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inmueble no encontrado"));
