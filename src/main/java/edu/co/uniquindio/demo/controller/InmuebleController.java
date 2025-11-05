@@ -54,9 +54,15 @@ public class InmuebleController {
     return ResponseEntity.ok(resultados);
     }
 
-    @GetMapping("/detalles")
-    public ResponseEntity<List<InmuebleDetalle>> listarInmueblesConPropietario() {
-        return ResponseEntity.ok(inmuebleService.listarInmueblesConPropietario());
+    @GetMapping("/detalles/{id}")
+    public ResponseEntity<InmuebleDetalle> obtenerDetalleInmueble(@PathVariable String id) {
+        try {
+            InmuebleDetalle detalle = inmuebleService.obtenerDetalleInmueblePorId(id);
+            return ResponseEntity.ok(detalle);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
 }

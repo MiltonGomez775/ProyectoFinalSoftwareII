@@ -59,27 +59,27 @@ public class InmuebleService {
             .toList();
     }     
 
-    public List<InmuebleDetalle> listarInmueblesConPropietario() {
-        List<Inmueble> inmuebles = inmuebleRepository.findAll();
+    public InmuebleDetalle obtenerDetalleInmueblePorId(String id) {
+        Inmueble inmueble = inmuebleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Inmueble no encontrado"));
 
-        return inmuebles.stream().map(i -> {
-            InmuebleDetalle dto = new InmuebleDetalle();
-            dto.setId(i.getId());
-            dto.setDireccion(i.getDireccion());
-            dto.setArea(i.getArea());
-            dto.setCanon(i.getCanon());
-            dto.setAdministracionIncluida(i.isAdministracionIncluida());
-            dto.setValorAdministracion(i.getValorAdministracion());
-            dto.setDescripcion(i.getDescripcion());
-            dto.setEstado(i.getEstado());
+        InmuebleDetalle dto = new InmuebleDetalle();
+        dto.setId(inmueble.getId());
+        dto.setDireccion(inmueble.getDireccion());
+        dto.setArea(inmueble.getArea());
+        dto.setCanon(inmueble.getCanon());
+        dto.setAdministracionIncluida(inmueble.isAdministracionIncluida());
+        dto.setValorAdministracion(inmueble.getValorAdministracion());
+        dto.setDescripcion(inmueble.getDescripcion());
+        dto.setEstado(inmueble.getEstado());
 
-            // Traer el nombre del propietario
-            String propietarioNombre = usuarioRepository.findById(i.getPropietarioId())
-                                        .map(p -> p.getNombre())
-                                        .orElse("Desconocido");
-            dto.setPropietarioNombre(propietarioNombre);
+        // traer el nombre del propietario
+        String propietarioNombre = usuarioRepository.findById(inmueble.getPropietarioId())
+                                    .map(p -> p.getNombre())
+                                    .orElse("Desconocido");
+        dto.setPropietarioNombre(propietarioNombre);
 
-            return dto;
-        }).collect(Collectors.toList());
+        return dto;
     }
+
 }
