@@ -12,6 +12,7 @@ public class EspacioDisponibleService {
     @Autowired
     private EspacioDisponibleRepository espacioDisponibleRepository;
 
+    // 🔹 Implementación: se agregó la disponibilidad del asesor
     public EspacioDisponible crearEspacio(EspacioDisponible espacio) {
         espacio.setDisponible(true);
         return espacioDisponibleRepository.save(espacio);
