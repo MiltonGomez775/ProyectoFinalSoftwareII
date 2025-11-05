@@ -6,7 +6,6 @@ import edu.co.uniquindio.demo.repository.InmuebleRepository;
 import edu.co.uniquindio.demo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
