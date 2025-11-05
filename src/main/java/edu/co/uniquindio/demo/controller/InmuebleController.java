@@ -1,5 +1,6 @@
 package edu.co.uniquindio.demo.controller;
 
+import edu.co.uniquindio.demo.dto.InmuebleDetalle;
 import edu.co.uniquindio.demo.model.Inmueble;
 import edu.co.uniquindio.demo.service.InmuebleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,41 @@ public class InmuebleController {
         return ResponseEntity.ok(inmuebleService.editarInmueble(id, inmuebleActualizado));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Inmueble> obtenerInmueblePorId(@PathVariable String id) {
+        Inmueble inmueble = inmuebleService.obtenerInmueblePorId(id);
+        if (inmueble != null) {
+            return ResponseEntity.ok(inmueble);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<Inmueble>> listarInmuebles() {
         return ResponseEntity.ok(inmuebleService.listarInmuebles());
     }
+
+    @GetMapping("/filtrar")
+    public ResponseEntity<List<Inmueble>> filtrarInmuebles(
+        @RequestParam(required = false) String direccion,
+        @RequestParam(required = false) Double minPrecio,
+        @RequestParam(required = false) Double maxPrecio,
+        @RequestParam(required = false) String estado) {
+
+    List<Inmueble> resultados = inmuebleService.filtrarInmuebles(direccion, minPrecio, maxPrecio, estado);
+    return ResponseEntity.ok(resultados);
+    }
+
+    @GetMapping("/detalles/{id}")
+    public ResponseEntity<InmuebleDetalle> obtenerDetalleInmueble(@PathVariable String id) {
+        try {
+            InmuebleDetalle detalle = inmuebleService.obtenerDetalleInmueblePorId(id);
+            return ResponseEntity.ok(detalle);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }

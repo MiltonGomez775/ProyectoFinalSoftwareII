@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Servicio encargado de manejar la lógica de negocio relacionada con los usuarios.
@@ -81,4 +82,20 @@ public class UsuarioService {
         usuario.setRol(nuevoRol);
         return usuarioRepository.save(usuario);
     }
+
+    public Usuario obtenerUsuarioPorId(String id) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+        if (usuarioOpt.isEmpty()) {
+            throw new RuntimeException("Usuario no encontrado con id: " + id);
+        }
+        return usuarioOpt.get();
+    }
+
+    public List<Usuario> listarPropietarios() {
+        return usuarioRepository.findAll()
+                .stream()
+                .filter(usuario -> "PROPIETARIO".equalsIgnoreCase(usuario.getRol()))
+                .collect(Collectors.toList());
+    }
+    
 }

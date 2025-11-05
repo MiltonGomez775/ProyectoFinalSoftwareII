@@ -24,6 +24,6 @@ public class Inmueble {
     private double valorAdministracion;
     private String descripcion;
     private String estado = "disponible"; // disponible/ocupado
-    private ObjectId propietarioId;
+    private String propietarioId;
     private List<String> fotos; // URLs o nombres de archivos
 }

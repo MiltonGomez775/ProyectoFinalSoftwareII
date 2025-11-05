@@ -32,4 +32,16 @@ public class UsuarioController {
             @RequestParam String nuevoRol) {
         return ResponseEntity.ok(usuarioService.cambiarRol(id, nuevoRol));
     }
+
+    @GetMapping("/usuarios/{id}")
+    public ResponseEntity<Usuario> obtenerUsuarioPorId(@PathVariable String id) {
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(id);
+            return ResponseEntity.ok(usuario);
+}
+
+    @GetMapping("/propietarios")
+    public ResponseEntity<List<Usuario>> listarPropietarios() {
+        return ResponseEntity.ok(usuarioService.listarPropietarios());
+    }
+
 }
