@@ -1,9 +1,12 @@
 package edu.co.uniquindio.demo.service;
 
+import edu.co.uniquindio.demo.dto.CitaResponse;
 import edu.co.uniquindio.demo.model.Cita;
 import edu.co.uniquindio.demo.model.EspacioDisponible;
 import edu.co.uniquindio.demo.repository.CitaRepository;
 import edu.co.uniquindio.demo.repository.EspacioDisponibleRepository;
+import edu.co.uniquindio.demo.repository.InmuebleRepository;
+import edu.co.uniquindio.demo.repository.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,12 @@ public class CitaService {
 
     @Autowired
     private EspacioDisponibleRepository espacioDisponibleRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private InmuebleRepository inmuebleRepository;
 
     public Cita crearCita(Cita cita) {
         EspacioDisponible espacio = espacioDisponibleRepository.findById(cita.getEspacioId())
@@ -75,7 +84,62 @@ public class CitaService {
         return citaRepository.save(cita);
     }
 
-    public List<Cita> listarPendientes() {
-        return citaRepository.findByEstado("pendiente");
+    public List<CitaResponse> listarPendientes() {
+    List<Cita> citas = citaRepository.findByEstado("pendiente");
+
+    return citas.stream().map(cita -> {
+        CitaResponse response = new CitaResponse();
+        response.setId(cita.getId());
+        response.setClienteId(cita.getClienteId());
+        response.setPropietarioId(cita.getPropietarioId());
+        response.setInmuebleId(cita.getInmuebleId());
+        response.setEspacioId(cita.getEspacioId());
+        response.setFecha(cita.getFecha());
+        response.setHoraInicio(cita.getHoraInicio());
+        response.setHoraFin(cita.getHoraFin());
+        response.setEstado(cita.getEstado());
+
+        // Obtener nombres
+        usuarioRepository.findById(cita.getClienteId())
+                .ifPresent(u -> response.setNombreCliente(u.getNombre()));
+        usuarioRepository.findById(cita.getPropietarioId())
+                .ifPresent(u -> response.setNombrePropietario(u.getNombre()));
+
+        inmuebleRepository.findById(cita.getInmuebleId())
+                .ifPresent(u -> response.setNombreInmueble(u.getDireccion()));
+
+        return response;
+    }).toList();
+}
+
+    public List<CitaResponse> listarTodas() {
+        List<Cita> citas = citaRepository.findAll();
+
+        return citas.stream().map(cita -> {
+        CitaResponse response = new CitaResponse();
+        response.setId(cita.getId());
+        response.setClienteId(cita.getClienteId());
+        response.setPropietarioId(cita.getPropietarioId());
+        response.setInmuebleId(cita.getInmuebleId());
+        response.setEspacioId(cita.getEspacioId());
+        response.setFecha(cita.getFecha());
+        response.setHoraInicio(cita.getHoraInicio());
+        response.setHoraFin(cita.getHoraFin());
+        response.setEstado(cita.getEstado());
+
+        // Obtener nombres y dirección del inmueble
+        usuarioRepository.findById(cita.getClienteId())
+                .ifPresent(u -> response.setNombreCliente(u.getNombre()));
+
+        usuarioRepository.findById(cita.getPropietarioId())
+                .ifPresent(u -> response.setNombrePropietario(u.getNombre()));
+
+        inmuebleRepository.findById(cita.getInmuebleId())
+                .ifPresent(inmueble -> response.setNombreInmueble(inmueble.getDireccion()));
+
+        return response;
+        }).toList();
     }
+
+
 }

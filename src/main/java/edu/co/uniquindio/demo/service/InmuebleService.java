@@ -1,17 +1,24 @@
 package edu.co.uniquindio.demo.service;
 
+import edu.co.uniquindio.demo.dto.InmuebleDetalle;
 import edu.co.uniquindio.demo.model.Inmueble;
 import edu.co.uniquindio.demo.repository.InmuebleRepository;
+import edu.co.uniquindio.demo.repository.UsuarioRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InmuebleService {
 
     @Autowired
     private InmuebleRepository inmuebleRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public Inmueble publicarInmueble(Inmueble inmueble) {
         inmueble.setEstado("disponible");
@@ -50,5 +57,29 @@ public class InmuebleService {
             .filter(i -> maxPrecio == null || i.getCanon() <= maxPrecio)
             .filter(i -> estado == null || i.getEstado().equalsIgnoreCase(estado))
             .toList();
-}
+    }     
+
+    public List<InmuebleDetalle> listarInmueblesConPropietario() {
+        List<Inmueble> inmuebles = inmuebleRepository.findAll();
+
+        return inmuebles.stream().map(i -> {
+            InmuebleDetalle dto = new InmuebleDetalle();
+            dto.setId(i.getId());
+            dto.setDireccion(i.getDireccion());
+            dto.setArea(i.getArea());
+            dto.setCanon(i.getCanon());
+            dto.setAdministracionIncluida(i.isAdministracionIncluida());
+            dto.setValorAdministracion(i.getValorAdministracion());
+            dto.setDescripcion(i.getDescripcion());
+            dto.setEstado(i.getEstado());
+
+            // Traer el nombre del propietario
+            String propietarioNombre = usuarioRepository.findById(i.getPropietarioId())
+                                        .map(p -> p.getNombre())
+                                        .orElse("Desconocido");
+            dto.setPropietarioNombre(propietarioNombre);
+
+            return dto;
+        }).collect(Collectors.toList());
+    }
 }

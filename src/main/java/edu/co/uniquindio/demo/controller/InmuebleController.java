@@ -1,5 +1,6 @@
 package edu.co.uniquindio.demo.controller;
 
+import edu.co.uniquindio.demo.dto.InmuebleDetalle;
 import edu.co.uniquindio.demo.model.Inmueble;
 import edu.co.uniquindio.demo.service.InmuebleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,11 @@ public class InmuebleController {
 
     List<Inmueble> resultados = inmuebleService.filtrarInmuebles(direccion, minPrecio, maxPrecio, estado);
     return ResponseEntity.ok(resultados);
+    }
+
+    @GetMapping("/detalles")
+    public ResponseEntity<List<InmuebleDetalle>> listarInmueblesConPropietario() {
+        return ResponseEntity.ok(inmuebleService.listarInmueblesConPropietario());
     }
 
 }

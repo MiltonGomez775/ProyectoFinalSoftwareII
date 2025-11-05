@@ -1,5 +1,6 @@
 package edu.co.uniquindio.demo.controller;
 
+import edu.co.uniquindio.demo.dto.CitaResponse;
 import edu.co.uniquindio.demo.model.Cita;
 import edu.co.uniquindio.demo.service.CitaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,14 @@ public class CitaController {
     }
 
     @GetMapping("/pendientes")
-    public ResponseEntity<List<Cita>> listarPendientes() {
-        return ResponseEntity.ok(citaService.listarPendientes());
+        public ResponseEntity<List<CitaResponse>> listarPendientes() {
+    return ResponseEntity.ok(citaService.listarPendientes());
     }
+
+    @GetMapping
+    public ResponseEntity<List<CitaResponse>> listarTodas() {
+        return ResponseEntity.ok(citaService.listarTodas());
+    }
+
+
 }
